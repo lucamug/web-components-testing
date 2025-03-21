@@ -4,17 +4,29 @@
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
-        /* you can style your program here */
         body { padding: 0; margin: 0 }
     </style>
 </head>
 
 <body>
-    <div id="elm"></div>
+    <button id="btn01">Show</button>
+    <button id="btn02">Show without nested component</button>
+    <button id="btn03">Hide</button>
+    <web-component-01></web-component-01>
     <script src="elm.js"></script>
+    <script src="loader.js"></script>
     <script>
-        var app = Elm.Main.init({ node: document.getElementById("elm") });
-        // you can use ports and stuff here
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("btn01").addEventListener("click", function() {
+                document.dispatchEvent(new CustomEvent('event01', { detail: { text: "btn01" } }));
+            });
+            document.getElementById("btn02").addEventListener("click", function() {
+                document.dispatchEvent(new CustomEvent('event01', { detail: { text: "btn02" } }));
+            });
+            document.getElementById("btn03").addEventListener("click", function() {
+                document.dispatchEvent(new CustomEvent('event01', { detail: { text: "btn03" } }));
+            });
+        });
     </script>
 </body>
 

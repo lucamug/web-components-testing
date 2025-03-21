@@ -1,0 +1,17 @@
+#!/bin/bash
+set -eu
+
+#
+# Testing new Lydell Virtual DOM
+# https://github.com/lydell/elm-safe-virtual-dom
+#
+# Setting a new ELM_HOME folder
+#
+# Check for `window.virtualDomTesting` in the console
+#
+elm_home_relative=virtual-dom-testing
+ELM_HOME="$(realpath "$elm_home_relative")"
+export ELM_HOME
+rm ${elm_home_relative}/0.19.1/packages/*/*/*/*.dat || true
+
+cmd/start

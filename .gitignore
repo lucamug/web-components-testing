@@ -3,3 +3,23 @@ elm-stuff
 elm.js
 /index.html
 Elmjutsu*
+
+#
+# Testing new Lydell Virtual DOM
+# https://github.com/lydell/elm-safe-virtual-dom
+#
+# Check for `window.virtualDomTesting` in the console
+#
+# Ignore all folders and files under packages
+#
+virtual-dom-testing/0.19.1/packages/*
+# Re-include the elm directory (so Git will consider files inside it)
+!virtual-dom-testing/0.19.1/packages/elm/
+# Now ignore everything under elm…
+virtual-dom-testing/0.19.1/packages/elm/*
+# …except the following folders:
+!virtual-dom-testing/0.19.1/packages/elm/browser/
+!virtual-dom-testing/0.19.1/packages/elm/html/
+!virtual-dom-testing/0.19.1/packages/elm/virtual-dom/
+# Ignore artifacts
+virtual-dom-testing/0.19.1/packages/*/*/*/artifacts.dat
