@@ -10,21 +10,21 @@
 
 <body>
     <button id="btn01">Show</button>
-    <button id="btn02">Show without nested component</button>
     <button id="btn03">Hide</button>
+    <button id="btn02">Show without nested component</button>
     <web-component-01></web-component-01>
     <script src="elm.js"></script>
     <script src="loader.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("btn01").addEventListener("click", function() {
-                document.dispatchEvent(new CustomEvent('event01', { detail: { text: "btn01" } }));
+                document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: "btn01" } }));
             });
             document.getElementById("btn02").addEventListener("click", function() {
-                document.dispatchEvent(new CustomEvent('event01', { detail: { text: "btn02" } }));
+                document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: "btn02" } }));
             });
             document.getElementById("btn03").addEventListener("click", function() {
-                document.dispatchEvent(new CustomEvent('event01', { detail: { text: "btn03" } }));
+                document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: "btn03" } }));
             });
         });
     </script>

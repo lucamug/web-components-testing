@@ -14,10 +14,15 @@ const starter = (webComponentType) => {
                     }
                 }
             );
-            document.addEventListener("event01", (event) => {
-                this.app.ports.attr01.send(event.detail.text);
-            });
+            this.handleXYZ = (event) => {
+                this.app.ports.portXYZ.send(event.detail.text);
+            }
+            document.addEventListener("eventXYZ", this.handleXYZ);
         }
+        disconnectedCallback(event) {
+            this.app.ports.unmount.send(null);
+            document.removeEventListener("eventXYZ", this.handleXYZ);
+        };
     });
 };
 

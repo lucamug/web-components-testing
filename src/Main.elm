@@ -6,18 +6,21 @@ import Html.Attributes
 import Html.Events
 
 
-port attr01 : (String -> msg) -> Sub msg
+port portXYZ : (String -> msg) -> Sub msg
+
+
+port unmount : (() -> msg) -> Sub msg
 
 
 type alias Model =
-    { attr01 : String
+    { attr : String
     , flags : Flags
     }
 
 
 init : Flags -> ( Model, Cmd msg )
 init flags =
-    ( { attr01 = "btn01"
+    ( { attr = "btn01"
       , flags = flags
       }
     , Cmd.none
@@ -25,31 +28,35 @@ init flags =
 
 
 type Msg
-    = Attr01 String
+    = MsgDataFromPort String
+    | Unmount ()
 
 
 update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
-        Attr01 string ->
-            ( { model | attr01 = string }, Cmd.none )
+        MsgDataFromPort string ->
+            ( { model | attr = string }, Cmd.none )
+
+        Unmount () ->
+            ( model, Cmd.none )
 
 
 view : Model -> Html.Html Msg
 view model =
     if model.flags.webComponentType == "web-component-01" then
-        if model.attr01 == "btn03" then
+        if model.attr == "btn03" then
             Html.text ""
 
         else
             Html.div [ Html.Attributes.style "border" "5px solid blue" ]
                 ([ Html.div [] [ Html.text <| Debug.toString model ]
                  ]
-                    ++ (if model.attr01 == "btn02" then
+                    ++ (if model.attr == "btn02" then
                             []
 
                         else
-                            [ Html.node "web-component-02" [ Html.Attributes.attribute "attr01" model.attr01 ] [] ]
+                            [ Html.node "web-component-02" [ Html.Attributes.attribute "attr01" model.attr ] [] ]
                        )
                 )
 
@@ -65,11 +72,49 @@ type alias Flags =
     }
 
 
-main : Program Flags Model Msg
+main : Program Flags (Maybe Model) Msg
 main =
     Browser.element
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = \_ -> attr01 Attr01
+        { init =
+            \flags ->
+                flags
+                    |> init
+                    |> Tuple.mapFirst Just
+        , view =
+            \maybeModel ->
+                case maybeModel of
+                    Just model ->
+                        view model
+
+                    Nothing ->
+                        Html.text ""
+        , update =
+            \msg maybeModel ->
+                case maybeModel of
+                    Just model ->
+                        case msg of
+                            Unmount _ ->
+                                let
+                                    _ =
+                                        Debug.log "Unmounting" maybeModel
+                                in
+                                ( Nothing, Cmd.none )
+
+                            _ ->
+                                update msg model
+                                    |> Tuple.mapFirst Just
+
+                    Nothing ->
+                        ( Nothing, Cmd.none )
+        , subscriptions =
+            \maybeModel ->
+                case maybeModel of
+                    Just model ->
+                        Sub.batch
+                            [ portXYZ MsgDataFromPort
+                            , unmount Unmount
+                            ]
+
+                    Nothing ->
+                        Sub.none
         }
