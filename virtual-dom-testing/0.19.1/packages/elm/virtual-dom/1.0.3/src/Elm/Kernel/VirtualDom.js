@@ -2035,4 +2035,4 @@ function _VirtualDom_dekey(keyedNode)
 // Adds meta information about testing the new virtual DOM.
 // Remove this after the testing finished.
 // See 'cmd/upgrade-from-lydell-files'.
-window.virtualDomTesting = "virtual-dom/1.0.3:b2dd080, browser/1.0.2:4c4f8e5, html/1.0.0:6d02bc5"
+window.virtualDomTesting = "virtual-dom/1.0.3:b2dd080, browser/1.0.2:dc4614d, html/1.0.0:6d02bc5"
