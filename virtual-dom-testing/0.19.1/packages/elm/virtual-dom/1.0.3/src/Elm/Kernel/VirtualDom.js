@@ -56,6 +56,7 @@ function _VirtualDom_appendChild(parent, child)
 
 function _VirtualDom_insertBefore(parent, child, reference)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_insertBefore", parent); window.virtualDomTesting_counter++;
 	if (!(child.parentNode === parent && child.nextSibling === reference))
 	{
 		parent.insertBefore(child, reference);
@@ -64,6 +65,7 @@ function _VirtualDom_insertBefore(parent, child, reference)
 
 function _VirtualDom_insertAfter(parent, child, reference)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_insertAfter", parent); window.virtualDomTesting_counter++;
 	if (!(child.parentNode === parent && child.previousSibling === reference))
 	{
 		parent.insertBefore(child, reference === null ? parent.firstChild : reference.nextSibling);
@@ -72,6 +74,7 @@ function _VirtualDom_insertAfter(parent, child, reference)
 
 function _VirtualDom_moveBefore_(parent, child, reference)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_moveBefore_", parent); window.virtualDomTesting_counter++;
 	if (!(child.parentNode === parent && child.nextSibling === reference))
 	{
 		parent.moveBefore(child, reference);
@@ -80,6 +83,7 @@ function _VirtualDom_moveBefore_(parent, child, reference)
 
 function _VirtualDom_moveAfter_(parent, child, reference)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_moveAfter_", parent); window.virtualDomTesting_counter++;
 	if (!(child.parentNode === parent && child.previousSibling === reference))
 	{
 		parent.moveBefore(child, reference === null ? parent.firstChild : reference.nextSibling);
@@ -113,6 +117,7 @@ var _VirtualDom_init = F4(function(virtualNode, flagDecoder, debugMetadata, args
 
 function _VirtualDom_wrap(object)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_wrap", object); window.virtualDomTesting_counter++;
 	// Add a non-enumerable property to not break Elm's equality checks.
 	// You aren’t supposed to compare virtual nodes, but since it’s possible
 	// to not break people who do, why not?
@@ -139,6 +144,7 @@ function _VirtualDom_wrap(object)
 
 function _VirtualDom_text(string)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_text", string); window.virtualDomTesting_counter++;
 	return _VirtualDom_wrap({
 		$: __2_TEXT,
 		__text: string
@@ -152,6 +158,7 @@ function _VirtualDom_text(string)
 
 var _VirtualDom_nodeNS = F2(function(namespace, tag)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_nodeNS", tag); window.virtualDomTesting_counter++;
 	return F2(function(factList, kidList)
 	{
 		for (var kids = []; kidList.b; kidList = kidList.b) // WHILE_CONS
@@ -183,6 +190,7 @@ var _VirtualDom_node = _VirtualDom_nodeNS(undefined);
 
 var _VirtualDom_keyedNodeNS = F2(function(namespace, tag)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_keyedNodeNS", tag); window.virtualDomTesting_counter++;
 	return F2(function(factList, kidList)
 	{
 		for (var kids = [], kidsMap = Object.create(null); kidList.b; kidList = kidList.b) // WHILE_CONS
@@ -227,6 +235,7 @@ var _VirtualDom_keyedNode = _VirtualDom_keyedNodeNS(undefined);
 
 function _VirtualDom_custom(factList, model, render, diff)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_custom", diff); window.virtualDomTesting_counter++;
 	return _VirtualDom_wrap({
 		$: __2_CUSTOM,
 		__facts: _VirtualDom_organizeFacts(factList),
@@ -243,6 +252,7 @@ function _VirtualDom_custom(factList, model, render, diff)
 
 var _VirtualDom_map = F2(function(tagger, node)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_map", node); window.virtualDomTesting_counter++;
 	return {
 		$: __2_TAGGER,
 		__tagger: tagger,
@@ -485,6 +495,7 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 
 function _VirtualDom_organizeFacts(factList)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_organizeFacts", factList); window.virtualDomTesting_counter++;
 	var facts = {};
 
 	// Mark all elements for virtualization of server rendered nodes – see `_VirtualDom_markerProperty`.
@@ -529,6 +540,7 @@ function _VirtualDom_addClass(object, key, newClass)
 
 function _VirtualDom_render(vNode, eventNode)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_render", eventNode); window.virtualDomTesting_counter++;
 	var tag = vNode.$;
 
 	if (tag === __2_THUNK)
@@ -584,6 +596,7 @@ function _VirtualDom_render(vNode, eventNode)
 // - Only re-renders text nodes.
 function _VirtualDom_renderTranslated(vNode, eventNode)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_renderTranslated", eventNode); window.virtualDomTesting_counter++;
 	var tag = vNode.$;
 
 	if (tag === __2_THUNK)
@@ -608,6 +621,7 @@ function _VirtualDom_renderTranslated(vNode, eventNode)
 
 function _VirtualDom_storeDomNode(vNode, domNode)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_storeDomNode", domNode); window.virtualDomTesting_counter++;
 	if (vNode._.__renderedAt !== _VirtualDom_renderCount)
 	{
 		vNode._.__oldDomNodes = vNode._.__newDomNodes;
@@ -625,6 +639,7 @@ function _VirtualDom_storeDomNode(vNode, domNode)
 
 function _VirtualDom_applyFacts(domNode, eventNode, prevFacts, facts)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_applyFacts", facts); window.virtualDomTesting_counter++;
 	// Since properties and attributes are sometimes linked, we need to remove old
 	// ones before setting new ones. Otherwise we might set the `id` attribute and
 	// then remove the `id` property, resulting in no id, for example.
@@ -691,6 +706,7 @@ function _VirtualDom_applyFacts(domNode, eventNode, prevFacts, facts)
 
 function _VirtualDom_applyStyles(domNode, prevStyles, styles)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_applyStyles", styles); window.virtualDomTesting_counter++;
 	for (var key in styles)
 	{
 		var value = styles[key];
@@ -718,6 +734,7 @@ function _VirtualDom_applyStyles(domNode, prevStyles, styles)
 
 function _VirtualDom_removeStyles(domNode, prevStyles, styles)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_removeStyles", styles); window.virtualDomTesting_counter++;
 	for (var key in prevStyles)
 	{
 		if (!(key in styles))
@@ -741,6 +758,7 @@ function _VirtualDom_removeStyles(domNode, prevStyles, styles)
 
 function _VirtualDom_applyProps(domNode, props)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_applyProps", props); window.virtualDomTesting_counter++;
 	for (var key in props)
 	{
 		// See `_VirtualDom_applyFacts` and `_VirtualDom_markerProperty` for why we need to filter these.
@@ -768,6 +786,7 @@ function _VirtualDom_applyProps(domNode, props)
 
 function _VirtualDom_removeProps(domNode, prevProps, props)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_removeProps", props); window.virtualDomTesting_counter++;
 	for (var key in prevProps)
 	{
 		// See `_VirtualDom_applyFacts` and `_VirtualDom_markerProperty` for why we need to filter these.
@@ -805,6 +824,7 @@ function _VirtualDom_removeProps(domNode, prevProps, props)
 
 function _VirtualDom_applyAttrs(domNode, prevAttrs, attrs)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_applyAttrs", attrs); window.virtualDomTesting_counter++;
 	for (var key in attrs)
 	{
 		var value = attrs[key];
@@ -818,6 +838,7 @@ function _VirtualDom_applyAttrs(domNode, prevAttrs, attrs)
 
 function _VirtualDom_removeAttrs(domNode, prevAttrs, attrs)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_removeAttrs", attrs); window.virtualDomTesting_counter++;
 	for (var key in prevAttrs)
 	{
 		if (!(key in attrs))
@@ -1709,6 +1730,7 @@ function _VirtualDom_applyPatches(_rootDomNode, oldVirtualNode, newVirtualNode, 
 
 function _VirtualDom_applyPatchRedraw(x, y, eventNode)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_applyPatchRedraw", x, y); window.virtualDomTesting_counter++;
 	// Remove the old node. Well, just visit it for removal, but don’t remove the actual DOM node.
 	// We want to use `replaceChild` below instead. We have already increased the counter in
 	// `_VirtualDom_diffHelp`, so decrease it back first.
@@ -1824,6 +1846,7 @@ var _VirtualDom_markerProperty = 'data-elm';
 
 function _VirtualDom_virtualize(node)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_virtualize", node); window.virtualDomTesting_counter++;
 	// The debugger has always done `_VirtualDom_virtualize(document)` instead of
 	// `_VirtualDom_virtualize(document.body)` by mistake. To be backwards compatible
 	// with elm/browser, support that here.
@@ -1851,6 +1874,7 @@ function _VirtualDom_virtualize(node)
 
 function _VirtualDom_virtualizeHelp(node)
 {
+	console.log(window.virtualDomTesting_version, window.virtualDomTesting_counter, "VDOM _VirtualDom_virtualizeHelp", node); window.virtualDomTesting_counter++;
 	// TEXT NODES
 
 	if (node.nodeType === 3)
@@ -2036,3 +2060,5 @@ function _VirtualDom_dekey(keyedNode)
 // Remove this after the testing finished.
 // See 'cmd/upgrade-from-lydell-files'.
 window.virtualDomTesting = "virtual-dom/1.0.3:b2dd080, browser/1.0.2:dc4614d, html/1.0.0:6d02bc5"
+window.virtualDomTesting_version = "2"
+window.virtualDomTesting_counter = 0

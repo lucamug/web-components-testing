@@ -5,28 +5,34 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
         body { padding: 0; margin: 0 }
+        :root {
+            --spacing: 1rem;
+        }
+        web-component-01 {
+            position: fixed;
+            top: var(--spacing);
+            right: var(--spacing);
+            margin-left: var(--spacing);
+        }
     </style>
 </head>
 
 <body>
-    <button id="btn01">Show</button>
-    <button id="btn03">Hide</button>
-    <button id="btn02">Show without nested component</button>
+    <div><button id="toggle01">Toggle "Replicate the issue"</button></div>
+    <div><button id="btn01">Step 0 - Show nested Web Components</button></div>
+    <div><button id="btn03">Step 1 - Hide all</button></div>
+    <div><button id="btn02">Step 2 - Show only one Web Component</button></div>
     <web-component-01></web-component-01>
     <script src="elm.js"></script>
     <script src="loader.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("btn01").addEventListener("click", function() {
-                document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: "btn01" } }));
-            });
-            document.getElementById("btn02").addEventListener("click", function() {
-                document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: "btn02" } }));
-            });
-            document.getElementById("btn03").addEventListener("click", function() {
-                document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: "btn03" } }));
-            });
-        });
+        function dispatch(text) {
+            document.dispatchEvent(new CustomEvent('eventXYZ', { detail: { text: text } }));
+        }
+        toggle01.addEventListener("click", function() {dispatch("toggle01")});
+        btn01.addEventListener("click", function() {dispatch("btn01")});
+        btn02.addEventListener("click", function() {dispatch("btn02")});
+        btn03.addEventListener("click", function() {dispatch("btn03")});
     </script>
 </body>
 

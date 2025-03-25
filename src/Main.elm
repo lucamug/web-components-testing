@@ -1,9 +1,8 @@
 port module Main exposing (main)
 
 import Browser
-import Html
-import Html.Attributes
-import Html.Events
+import Types
+import View
 
 
 port portXYZ : (String -> msg) -> Sub msg
@@ -12,67 +11,31 @@ port portXYZ : (String -> msg) -> Sub msg
 port unmount : (() -> msg) -> Sub msg
 
 
-type alias Model =
-    { attr : String
-    , flags : Flags
-    }
-
-
-init : Flags -> ( Model, Cmd msg )
+init : Types.Flags -> ( Types.Model, Cmd msg )
 init flags =
     ( { attr = "btn01"
       , flags = flags
+      , replicateTheIssue = True
       }
     , Cmd.none
     )
 
 
-type Msg
-    = MsgDataFromPort String
-    | Unmount ()
-
-
-update : Msg -> Model -> ( Model, Cmd msg )
+update : Types.Msg -> Types.Model -> ( Types.Model, Cmd msg )
 update msg model =
     case msg of
-        MsgDataFromPort string ->
-            ( { model | attr = string }, Cmd.none )
+        Types.MsgDataFromPort string ->
+            if string == "toggle01" then
+                ( { model | replicateTheIssue = not model.replicateTheIssue }, Cmd.none )
 
-        Unmount () ->
+            else
+                ( { model | attr = string }, Cmd.none )
+
+        Types.Unmount () ->
             ( model, Cmd.none )
 
 
-view : Model -> Html.Html Msg
-view model =
-    if model.flags.webComponentType == "web-component-01" then
-        if model.attr == "btn03" then
-            Html.text ""
-
-        else
-            Html.div [ Html.Attributes.style "border" "5px solid blue" ]
-                ([ Html.div [] [ Html.text <| Debug.toString model ]
-                 ]
-                    ++ (if model.attr == "btn02" then
-                            []
-
-                        else
-                            [ Html.node "web-component-02" [ Html.Attributes.attribute "attr01" model.attr ] [] ]
-                       )
-                )
-
-    else
-        Html.div [ Html.Attributes.style "border" "5px solid red" ]
-            [ Html.div [] [ Html.text <| Debug.toString model ]
-            ]
-
-
-type alias Flags =
-    { webComponentType : String
-    , virtualDomTesting : Maybe String
-    }
-
-
-main : Program Flags (Maybe Model) Msg
+main : Program Types.Flags (Maybe Types.Model) Types.Msg
 main =
     Browser.element
         { init =
@@ -80,20 +43,23 @@ main =
                 flags
                     |> init
                     |> Tuple.mapFirst Just
-        , view =
+        , subscriptions =
             \maybeModel ->
                 case maybeModel of
-                    Just model ->
-                        view model
+                    Just _ ->
+                        Sub.batch
+                            [ portXYZ Types.MsgDataFromPort
+                            , unmount Types.Unmount
+                            ]
 
                     Nothing ->
-                        Html.text ""
+                        Sub.none
         , update =
             \msg maybeModel ->
                 case maybeModel of
                     Just model ->
                         case msg of
-                            Unmount _ ->
+                            Types.Unmount _ ->
                                 let
                                     _ =
                                         Debug.log "Unmounting" maybeModel
@@ -106,15 +72,13 @@ main =
 
                     Nothing ->
                         ( Nothing, Cmd.none )
-        , subscriptions =
+        , view =
             \maybeModel ->
                 case maybeModel of
                     Just model ->
-                        Sub.batch
-                            [ portXYZ MsgDataFromPort
-                            , unmount Unmount
-                            ]
+                        View.view model
 
                     Nothing ->
-                        Sub.none
+                        -- Replace this with `Html.text ""` to fix the issue
+                        View.none
         }
