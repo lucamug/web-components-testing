@@ -5,6 +5,12 @@ npm install
 cmd/start-with-virtual-dom-testing
 ```
 
+Note: The issue has been fixed. See [https://github.com/lydell/virtual-dom/commit/2c1f34f23440420dc571ff1ba1bf5bd588eb3d28](https://github.com/lydell/virtual-dom/commit/2c1f34f23440420dc571ff1ba1bf5bd588eb3d28).
+
+## To recreate the issue
+
+Check out the branch `main-old`
+
 Press:
 
 * Step 1 - Hide all
